@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=MintCare Companion
+GenericName=System Cleanup & Diagnostics
+Comment=Comprehensive System Maintenance, Diagnostics, and Optimization Tool for Linux Mint
+Exec=mintcare-companion
+Icon=mintcare-companion
+Terminal=false
+Type=Application
+Categories=System;Settings;Admin;GTK;
+Keywords=system;cleaner;diagnostics;mint;maintenance;hardware;fan;updates;
+StartupNotify=true

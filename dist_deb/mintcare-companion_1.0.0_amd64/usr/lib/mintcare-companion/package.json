@@ -1,0 +1,46 @@
+{
+  "name": "mintcare-companion",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "setup": "npm install && npm run build",
+    "setup:tauri": "sudo apt-get update && sudo apt-get install -y cargo rustc pkg-config build-essential libgtk-3-dev libwebkit2gtk-4.1-dev libsoup-3.0-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev curl wget file && npm install",
+    "dev": "tsx server.ts",
+    "build": "vite build && esbuild server.ts --bundle --platform=node --format=cjs --sourcemap --define:process.env.NODE_ENV=\"\\\"production\\\"\" --outfile=dist/server.cjs",
+    "package:deb": "bash scripts/build-deb.sh",
+    "start": "node dist/server.cjs",
+    "clean": "rm -rf dist server.js dist_deb",
+    "lint": "tsc --noEmit",
+    "tauri": "npx @tauri-apps/cli",
+    "tauri:dev": "concurrently \"npm run dev\" \"wait-on http://localhost:3000 && npx @tauri-apps/cli dev\"",
+    "tauri:build": "npm run build && npx @tauri-apps/cli build"
+  },
+  "dependencies": {
+    "@google/genai": "^2.4.0",
+    "@tailwindcss/vite": "^4.1.14",
+    "@vitejs/plugin-react": "^5.0.4",
+    "autoprefixer": "^10.5.2",
+    "dotenv": "^17.2.3",
+    "esbuild": "^0.28.1",
+    "express": "^4.21.2",
+    "lucide-react": "^0.546.0",
+    "motion": "^12.23.24",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1",
+    "recharts": "^3.9.2",
+    "tailwindcss": "^4.3.2",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2"
+  },
+  "devDependencies": {
+    "@tauri-apps/api": "^1.6.0",
+    "@tauri-apps/cli": "^1.6.3",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "concurrently": "^10.0.3",
+    "wait-on": "^9.0.10"
+  }
+}

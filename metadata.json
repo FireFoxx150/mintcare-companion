@@ -1,0 +1,6 @@
+{
+  "name": "Linux Mint System Cleanup and Diagnostic Tool",
+  "description": "A comprehensive system cleanup, connection monitoring, report auditing, and task scheduling application designed to optimize and maintain Linux Mint systems.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

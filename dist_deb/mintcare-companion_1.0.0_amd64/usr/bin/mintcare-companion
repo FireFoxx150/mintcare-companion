@@ -1,0 +1,95 @@
+#!/bin/bash
+export NODE_ENV=production
+export PORT=${PORT:-3000}
+
+APP_DIR="/usr/lib/mintcare-companion"
+
+if [ -d "$APP_DIR" ]; then
+  cd "$APP_DIR" || exit 1
+fi
+
+# Locate Node.js executable across system paths and user environments
+NODE_BIN=""
+if command -v node >/dev/null 2>&1; then
+  NODE_BIN="$(command -v node)"
+elif command -v nodejs >/dev/null 2>&1; then
+  NODE_BIN="$(command -v nodejs)"
+fi
+
+if [ -z "$NODE_BIN" ]; then
+  # Check common version manager and system directories (unquoted globbing for nvm)
+  for candidate in /usr/bin/node /usr/bin/nodejs /usr/local/bin/node /snap/bin/node /opt/node/bin/node $HOME/.nvm/versions/node/*/bin/node $HOME/.fnm/current/bin/node $HOME/.asdf/shims/node $HOME/.n/bin/node; do
+    if [ -x "$candidate" ]; then
+      NODE_BIN="$candidate"
+      break
+    fi
+  done
+fi
+
+if [ -z "$NODE_BIN" ] && [ -f "$HOME/.nvm/nvm.sh" ]; then
+  . "$HOME/.nvm/nvm.sh" --no-use >/dev/null 2>&1
+  NVM_NODE="$(nvm_which default 2>/dev/null || nvm_which current 2>/dev/null)"
+  if [ -x "$NVM_NODE" ]; then
+    NODE_BIN="$NVM_NODE"
+  fi
+fi
+
+if [ -z "$NODE_BIN" ]; then
+  MSG="MintCare Companion requires Node.js to run.\nPlease install Node.js (e.g. 'sudo apt install nodejs') and launch again."
+  if command -v zenity >/dev/null 2>&1; then
+    zenity --error --title="MintCare Companion" --text="$MSG"
+  elif command -v kdialog >/dev/null 2>&1; then
+    kdialog --error "$MSG"
+  fi
+  echo "Error: Node.js is required to run MintCare Companion." >&2
+  exit 1
+fi
+
+LOG_DIR="${HOME}/.local/state/mintcare-companion"
+mkdir -p "$LOG_DIR"
+SERVER_LOG="${LOG_DIR}/server.log"
+
+# Check if backend server is already running on PORT
+IS_RUNNING=0
+if command -v curl >/dev/null 2>&1; then
+  if curl -s "http://localhost:${PORT}/api/system/stats" >/dev/null 2>&1; then
+    IS_RUNNING=1
+  fi
+fi
+
+SERVER_PID=""
+if [ $IS_RUNNING -eq 0 ]; then
+  echo "=== MintCare Companion Backend Started: $(date) ===" >> "$SERVER_LOG"
+  echo "Using Node.js at $NODE_BIN" >> "$SERVER_LOG"
+  "$NODE_BIN" dist/server.cjs >> "$SERVER_LOG" 2>&1 &
+  SERVER_PID=$!
+
+  # Poll for backend server readiness up to 10 seconds
+  for i in {1..20}; do
+    if command -v curl >/dev/null 2>&1; then
+      if curl -s "http://localhost:${PORT}/" >/dev/null 2>&1; then
+        break
+      fi
+    fi
+    sleep 0.5
+  done
+else
+  echo "MintCare Companion Backend is already running on port ${PORT}." >> "$SERVER_LOG"
+fi
+
+URL="http://localhost:${PORT}"
+echo "Opening MintCare Companion UI at ${URL}..."
+
+if command -v xdg-open >/dev/null 2>&1; then
+  xdg-open "$URL" >/dev/null 2>&1 &
+elif command -v x-www-browser >/dev/null 2>&1; then
+  x-www-browser "$URL" >/dev/null 2>&1 &
+elif command -v firefox >/dev/null 2>&1; then
+  firefox "$URL" >/dev/null 2>&1 &
+elif command -v google-chrome >/dev/null 2>&1; then
+  google-chrome "$URL" >/dev/null 2>&1 &
+fi
+
+if [ -n "$SERVER_PID" ]; then
+  wait $SERVER_PID
+fi

@@ -1,0 +1,12 @@
+Package: mintcare-companion
+Version: 1.0.0
+Section: admin
+Priority: optional
+Architecture: amd64
+Maintainer: Linux Mint Community <support@linuxmint.com>
+Depends: nodejs (>= 16.0.0) | node (>= 16.0.0)
+Description: MintCare Companion - System Cleanup and Diagnostics
+ MintCare Companion is a native system health, cleanup, fan curve management,
+ and diagnostic utility built for Linux Mint and Ubuntu systems.
+ Features hardware sensors monitoring, disk space cleaning, APT/Flatpak package
+ management, and automated maintenance tasks.

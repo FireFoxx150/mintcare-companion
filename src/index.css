@@ -1,0 +1,310 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Global Immersive Overrides */
+body {
+  background-color: #05070a;
+  color: #cbd5e1;
+}
+
+/* Custom scrollbar matching dark immersive look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #080c12;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(16, 185, 129, 0.3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 185, 129, 0.6);
+}
+
+/* --- High Contrast Accessibility Theme Overrides --- */
+html.high-contrast,
+html.high-contrast body {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* Background overrides for general containers, panels, aside, headers, cards */
+html.high-contrast div[class*="bg-"],
+html.high-contrast aside[class*="bg-"],
+html.high-contrast header[class*="bg-"],
+html.high-contrast footer[class*="bg-"],
+html.high-contrast section[class*="bg-"],
+html.high-contrast article[class*="bg-"],
+html.high-contrast nav[class*="bg-"],
+html.high-contrast form[class*="bg-"] {
+  background-color: #000000 !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* Border overrides for all containers/panels to make them stark, thick, and white */
+html.high-contrast div[class*="border"],
+html.high-contrast aside[class*="border"],
+html.high-contrast header[class*="border"],
+html.high-contrast footer[class*="border"],
+html.high-contrast section[class*="border"],
+html.high-contrast article[class*="border"],
+html.high-contrast nav[class*="border"],
+html.high-contrast form[class*="border"],
+html.high-contrast button[class*="border"],
+html.high-contrast input[class*="border"],
+html.high-contrast select[class*="border"],
+html.high-contrast textarea[class*="border"] {
+  border-color: #ffffff !important;
+  border-width: 2px !important;
+  border-style: solid !important;
+}
+
+/* Text color overrides for high-contrast readability */
+html.high-contrast [class*="text-slate-"],
+html.high-contrast [class*="text-gray-"],
+html.high-contrast [class*="text-zinc-"],
+html.high-contrast [class*="text-emerald-100"],
+html.high-contrast [class*="text-emerald-200"],
+html.high-contrast [class*="text-emerald-300"],
+html.high-contrast [class*="text-emerald-400"],
+html.high-contrast [class*="text-amber-"],
+html.high-contrast [class*="text-yellow-"] {
+  color: #ffffff !important;
+}
+
+/* Make primary brand text or highlights bright high-contrast yellow */
+html.high-contrast .text-emerald-500,
+html.high-contrast .text-emerald-400,
+html.high-contrast .text-amber-500,
+html.high-contrast .text-amber-400,
+html.high-contrast .text-yellow-500,
+html.high-contrast .text-yellow-400,
+html.high-contrast .text-blue-400,
+html.high-contrast .text-[#10b981],
+html.high-contrast [class*="text-emerald-500"],
+html.high-contrast [class*="text-amber-500"] {
+  color: #ffff00 !important; /* Pure Stark Yellow */
+  font-weight: 700 !important;
+}
+
+/* Make red/danger alerts stark and bright magenta or pure red */
+html.high-contrast .text-red-400,
+html.high-contrast .text-red-500,
+html.high-contrast [class*="text-red-"] {
+  color: #ff3333 !important;
+  font-weight: 700 !important;
+}
+
+/* Make icons stark white or yellow */
+html.high-contrast svg {
+  stroke: currentColor !important;
+  filter: drop-shadow(0 0 1px #000) !important;
+}
+
+/* Overrides for inputs and buttons */
+html.high-contrast button {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 2px solid #ffffff !important;
+  font-weight: 700 !important;
+  border-radius: 4px !important;
+  opacity: 1 !important;
+}
+
+html.high-contrast button:hover {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-color: #ffffff !important;
+}
+
+/* Active navigation buttons & tabs */
+html.high-contrast button[class*="bg-emerald-500/10"],
+html.high-contrast button[class*="bg-[#10b981]/10"],
+html.high-contrast button[class*="text-emerald-400"],
+html.high-contrast button[id*="nav-tab-"][class*="text-emerald-400"],
+html.high-contrast button[class*="border-emerald-500"] {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-color: #ffffff !important;
+  border-left-width: 6px !important;
+}
+
+html.high-contrast input,
+html.high-contrast select,
+html.high-contrast textarea {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 2px solid #ffffff !important;
+  border-radius: 4px !important;
+  padding: 8px !important;
+  font-weight: bold !important;
+}
+
+html.high-contrast input::placeholder {
+  color: #e5e7eb !important;
+  opacity: 1 !important;
+}
+
+/* Status dots - keep bright green/red */
+html.high-contrast span[class*="bg-emerald-500"],
+html.high-contrast span[class*="bg-green-500"] {
+  background-color: #00ff00 !important;
+  box-shadow: 0 0 4px #00ff00 !important;
+}
+
+html.high-contrast span[class*="bg-red-500"],
+html.high-contrast span[class*="bg-rose-500"] {
+  background-color: #ff0000 !important;
+  box-shadow: 0 0 4px #ff0000 !important;
+}
+
+/* Recharts / SVG charts styling */
+html.high-contrast .recharts-cartesian-grid-horizontal line,
+html.high-contrast .recharts-cartesian-grid-vertical line {
+  stroke: #ffffff !important;
+  stroke-dasharray: none !important;
+  stroke-width: 1.5px !important;
+}
+
+html.high-contrast .recharts-text {
+  fill: #ffffff !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+}
+
+html.high-contrast .recharts-legend-item-text {
+  color: #ffffff !important;
+}
+
+html.high-contrast path.recharts-rectangle {
+  fill: #ffffff !important;
+  stroke: #000000 !important;
+  stroke-width: 2px !important;
+}
+
+/* Custom scrollbar matching dark immersive look vs high contrast */
+html.high-contrast ::-webkit-scrollbar-track {
+  background: #000000;
+  border-left: 1px solid #ffffff;
+}
+html.high-contrast ::-webkit-scrollbar-thumb {
+  background: #ffffff;
+  border-radius: 0px;
+  border: 1px solid #000000;
+}
+html.high-contrast ::-webkit-scrollbar-thumb:hover {
+  background: #facc15;
+}
+
+/* Immersive Card Pulse Animations on Polled Updates */
+@keyframes card-pulse-emerald {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+  30% {
+    transform: scale(1.012);
+    box-shadow: 0 0 22px rgba(16, 185, 129, 0.22);
+    border-color: rgba(16, 185, 129, 0.35);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+}
+
+@keyframes card-pulse-blue {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+  30% {
+    transform: scale(1.012);
+    box-shadow: 0 0 22px rgba(59, 130, 246, 0.22);
+    border-color: rgba(59, 130, 246, 0.35);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+}
+
+@keyframes card-pulse-orange {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+  30% {
+    transform: scale(1.012);
+    box-shadow: 0 0 22px rgba(249, 115, 22, 0.22);
+    border-color: rgba(249, 115, 22, 0.35);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+}
+
+@keyframes card-pulse-hc {
+  0% {
+    transform: scale(1);
+    border-color: #ffffff !important;
+  }
+  30% {
+    transform: scale(1.015);
+    border-color: #ffff00 !important;
+  }
+  100% {
+    transform: scale(1);
+    border-color: #ffffff !important;
+  }
+}
+
+.animate-pulse-emerald {
+  animation: card-pulse-emerald 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-pulse-blue {
+  animation: card-pulse-blue 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-pulse-orange {
+  animation: card-pulse-orange 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0.3;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+html.high-contrast .animate-pulse-emerald,
+html.high-contrast .animate-pulse-blue,
+html.high-contrast .animate-pulse-orange {
+  animation: card-pulse-hc 1.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+
