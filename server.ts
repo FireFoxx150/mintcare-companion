@@ -1,4 +1,5 @@
 import express from "express";
+import helmet from "helmet";
 import path from "path";
 import fs from "fs";
 import os from "os";
@@ -15,6 +16,7 @@ dotenv.config();
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 
+app.use(helmet());
 app.use(express.json());
 
 // ── Health + startup-status ───────────────────────────────────────────────
